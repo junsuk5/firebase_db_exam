@@ -3,6 +3,7 @@ package com.example.myapplication.models;
 public class Student {
     private String name;
     private int age;
+    private String downloadUrl;
 
     public Student() {
     }
@@ -10,6 +11,14 @@ public class Student {
     public Student(String name, int age) {
         this.name = name;
         this.age = age;
+    }
+
+    public String getDownloadUrl() {
+        return downloadUrl;
+    }
+
+    public void setDownloadUrl(String downloadUrl) {
+        this.downloadUrl = downloadUrl;
     }
 
     public String getName() {
