@@ -21,6 +21,8 @@ import com.bumptech.glide.Glide;
 import com.example.myapplication.models.Student;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.storage.FirebaseStorage;
@@ -49,10 +51,20 @@ public class MainActivity extends AppCompatActivity {
 
     private ProgressBar mProgressBar;
 
+    private FirebaseUser mUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            // 로그인 안 되었음
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        } else {
+            mUser = FirebaseAuth.getInstance().getCurrentUser();
+        }
 
         mPreviewImageView = findViewById(R.id.preview_image);
         mProgressBar = findViewById(R.id.progressBar);
