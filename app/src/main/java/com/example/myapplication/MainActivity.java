@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
         student.put("name", name);
         student.put("age", age);
         student.put("downloadUrl", downloadUri.toString());
+        student.put("uid", mUser.getUid());
 
         addStudent(student);
     }
@@ -105,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
     private void queryData() {
         Query query = FirebaseFirestore.getInstance()
                 .collection("student")
+                .whereEqualTo("uid", mUser.getUid())
                 .orderBy("age", Query.Direction.DESCENDING);
 
         FirestoreRecyclerOptions<Student> options = new FirestoreRecyclerOptions.Builder<Student>()
