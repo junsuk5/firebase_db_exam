@@ -10,6 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -19,6 +22,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.models.Student;
+import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -245,5 +249,30 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return Bitmap.createScaledBitmap(source, newWidth, newHeight, true);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.logout, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_logout:
+                AuthUI.getInstance()
+                        .signOut(this)
+                        .addOnCompleteListener(task -> {
+                            // 로그아웃
+                            startActivity(new Intent(this, LoginActivity.class));
+                            finish();
+                        });
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
